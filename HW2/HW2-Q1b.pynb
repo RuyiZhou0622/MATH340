@@ -1,0 +1,46 @@
+pip install pulp
+
+import pulp
+
+x1=pulp.LpVariable("x1",lowBound=0)
+x2=pulp.LpVariable("x2",lowBound=0)
+x3=pulp.LpVariable("x3",lowBound=0)
+x4=pulp.LpVariable("x4",lowBound=0)
+x5=pulp.LpVariable("x5",lowBound=0)
+x6=pulp.LpVariable("x6",lowBound=0)
+
+
+optimum=pulp.LpProblem("min",pulp.LpMinimize)
+
+optimum+=x1+x2+x3+x4+x5+x6, "objective function"
+
+optimum+=x1+x2>=35
+optimum+=x2+x3>=65
+optimum+=x3+x4>=80
+optimum+=x4+x5>=40
+optimum+=x5+x6>=25
+optimum+=x6+x1>=15
+
+
+
+optimum.solve()
+
+print("decision variable values")
+
+for variable in optimum.variables():
+    print(variable.name,"=",variable.varValue)
+
+print("\nmin:")
+pulp.value(optimum.objective)
+
+//////The output window:
+decision variable values
+x1 = 0.0
+x2 = 35.0
+x3 = 30.0
+x4 = 50.0
+x5 = 10.0
+x6 = 15.0
+
+min:
+140.0
