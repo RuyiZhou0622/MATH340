@@ -1,0 +1,58 @@
+pip install pulp
+
+import pulp
+
+y1=pulp.LpVariable("y1",lowBound=0,upBound =4)
+
+y2=pulp.LpVariable("y2",lowBound=0,upBound=8)
+
+y3=pulp.LpVariable("y3",lowBound=0,upBound=3)
+
+b1=pulp.LpVariable("b1",lowBound=0,upBound=8)
+
+b2=pulp.LpVariable("b2",lowBound=0,upBound=13)
+
+b3=pulp.LpVariable("b3",lowBound=0,upBound=10)
+
+m1=pulp.LpVariable("m1",lowBound=0,upBound=22)
+
+m2=pulp.LpVariable("m2",lowBound=0,upBound=20)
+
+m3=pulp.LpVariable("m3",lowBound=0,upBound=18)
+
+
+
+optimum=pulp.LpProblem("max",pulp.LpMaximize)
+
+optimum+=300*y1+160*y2+360*y3+220*b1+130*b2+280*b3+100*m1+80*m2+140*m3, "objective function"
+
+optimum+=y1+y2+y3+b1+b2+b3+m1+m2+m3<=30
+
+
+
+
+optimum.solve()
+
+print("decision variable values")
+
+for variable in optimum.variables():
+    print(variable.name,"=",variable.varValue)
+
+print("\nmax:")
+pulp.value(optimum.objective)
+
+////////The output windows:
+decision variable values
+y1 = 4.0
+y2 = 5.0
+y3 = 3.0
+b1 = 8.0
+b2 = 0.0
+b3 = 10.0
+m1 = 0.0
+m2 = 0.0
+m3 = 0.0
+
+
+max:
+7640.0
